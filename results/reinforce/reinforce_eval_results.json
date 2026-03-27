@@ -1,0 +1,68 @@
+{
+  "final_model": {
+    "overall_mean_reward": 6.464249999999999,
+    "scenario_results": [
+      {
+        "scenario": "adult_weight_loss",
+        "mean_reward": 7.951999999999994,
+        "std_reward": 8.881784197001252e-16,
+        "min_reward": 7.951999999999993,
+        "max_reward": 7.951999999999993
+      },
+      {
+        "scenario": "adult_weight_gain",
+        "mean_reward": 9.89333333333333,
+        "std_reward": 0.0,
+        "min_reward": 9.89333333333333,
+        "max_reward": 9.89333333333333
+      },
+      {
+        "scenario": "adult_hypertension",
+        "mean_reward": 6.765000000000003,
+        "std_reward": 8.881784197001252e-16,
+        "min_reward": 6.765000000000004,
+        "max_reward": 6.765000000000004
+      },
+      {
+        "scenario": "baby_meal",
+        "mean_reward": 1.2466666666666668,
+        "std_reward": 2.220446049250313e-16,
+        "min_reward": 1.246666666666667,
+        "max_reward": 1.246666666666667
+      }
+    ]
+  },
+  "best_model": {
+    "overall_mean_reward": 7.120666666666664,
+    "scenario_results": [
+      {
+        "scenario": "adult_weight_loss",
+        "mean_reward": 7.775999999999994,
+        "std_reward": 8.881784197001252e-16,
+        "min_reward": 7.775999999999993,
+        "max_reward": 7.775999999999993
+      },
+      {
+        "scenario": "adult_weight_gain",
+        "mean_reward": 9.89333333333333,
+        "std_reward": 0.0,
+        "min_reward": 9.89333333333333,
+        "max_reward": 9.89333333333333
+      },
+      {
+        "scenario": "adult_hypertension",
+        "mean_reward": 6.079999999999998,
+        "std_reward": 0.0,
+        "min_reward": 6.079999999999998,
+        "max_reward": 6.079999999999998
+      },
+      {
+        "scenario": "baby_meal",
+        "mean_reward": 4.733333333333334,
+        "std_reward": 0.0,
+        "min_reward": 4.733333333333334,
+        "max_reward": 4.733333333333334
+      }
+    ]
+  }
+}

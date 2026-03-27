@@ -1,0 +1,112 @@
+[
+  {
+    "name": "reinforce_exp_01",
+    "learning_rate": 0.001,
+    "gamma": 0.99,
+    "entropy_coef": 0.001,
+    "overall_mean_reward": 7.164666666666664,
+    "adult_weight_loss": 7.951999999999993,
+    "adult_weight_gain": 9.89333333333333,
+    "adult_hypertension": 6.079999999999998,
+    "baby_meal": 4.733333333333334
+  },
+  {
+    "name": "reinforce_exp_02",
+    "learning_rate": 0.0005,
+    "gamma": 0.99,
+    "entropy_coef": 0.001,
+    "overall_mean_reward": 4.970583333333332,
+    "adult_weight_loss": 5.8,
+    "adult_weight_gain": 8.023999999999994,
+    "adult_hypertension": 1.3250000000000002,
+    "baby_meal": 4.733333333333334
+  },
+  {
+    "name": "reinforce_exp_03",
+    "learning_rate": 0.0001,
+    "gamma": 0.99,
+    "entropy_coef": 0.001,
+    "overall_mean_reward": -7.688750000000002,
+    "adult_weight_loss": -6.02,
+    "adult_weight_gain": 8.566666666666666,
+    "adult_hypertension": -0.7000000000000011,
+    "baby_meal": -32.601666666666674
+  },
+  {
+    "name": "reinforce_exp_04",
+    "learning_rate": 0.001,
+    "gamma": 0.95,
+    "entropy_coef": 0.001,
+    "overall_mean_reward": 1.432916666666667,
+    "adult_weight_loss": 0.4400000000000004,
+    "adult_weight_gain": 4.166666666666666,
+    "adult_hypertension": -1.8249999999999986,
+    "baby_meal": 2.95
+  },
+  {
+    "name": "reinforce_exp_05",
+    "learning_rate": 0.001,
+    "gamma": 0.995,
+    "entropy_coef": 0.001,
+    "overall_mean_reward": 5.426999999999999,
+    "adult_weight_loss": 2.1279999999999974,
+    "adult_weight_gain": 8.566666666666666,
+    "adult_hypertension": 6.079999999999998,
+    "baby_meal": 4.933333333333333
+  },
+  {
+    "name": "reinforce_exp_06",
+    "learning_rate": 0.001,
+    "gamma": 0.99,
+    "entropy_coef": 0.0,
+    "overall_mean_reward": 2.7415000000000003,
+    "adult_weight_loss": 1.7860000000000036,
+    "adult_weight_gain": 8.566666666666666,
+    "adult_hypertension": 1.2800000000000005,
+    "baby_meal": -0.6666666666666687
+  },
+  {
+    "name": "reinforce_exp_07",
+    "learning_rate": 0.001,
+    "gamma": 0.99,
+    "entropy_coef": 0.005,
+    "overall_mean_reward": 7.385666666666662,
+    "adult_weight_loss": 7.63599999999999,
+    "adult_weight_gain": 11.093333333333327,
+    "adult_hypertension": 6.079999999999998,
+    "baby_meal": 4.733333333333334
+  },
+  {
+    "name": "reinforce_exp_08",
+    "learning_rate": 0.0005,
+    "gamma": 0.95,
+    "entropy_coef": 0.005,
+    "overall_mean_reward": 20.003999999999998,
+    "adult_weight_loss": 19.936,
+    "adult_weight_gain": 22.266666666666666,
+    "adult_hypertension": 19.43,
+    "baby_meal": 18.383333333333333
+  },
+  {
+    "name": "reinforce_exp_09",
+    "learning_rate": 0.0005,
+    "gamma": 0.995,
+    "entropy_coef": 0.0005,
+    "overall_mean_reward": 5.022083333333331,
+    "adult_weight_loss": 11.729999999999997,
+    "adult_weight_gain": 8.506666666666662,
+    "adult_hypertension": 3.0249999999999977,
+    "baby_meal": -3.173333333333331
+  },
+  {
+    "name": "reinforce_exp_10",
+    "learning_rate": 0.0001,
+    "gamma": 0.995,
+    "entropy_coef": 0.005,
+    "overall_mean_reward": -13.154166666666667,
+    "adult_weight_loss": -15.539999999999996,
+    "adult_weight_gain": -5.363333333333334,
+    "adult_hypertension": -0.1800000000000006,
+    "baby_meal": -31.53333333333334
+  }
+]
