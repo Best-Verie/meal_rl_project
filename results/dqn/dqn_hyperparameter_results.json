@@ -7,11 +7,11 @@
     "batch_size": 32,
     "exploration_fraction": 0.3,
     "target_update_interval": 500,
-    "overall_mean_reward": 21.631924603174603,
-    "adult_weight_loss": 31.54222222222222,
-    "adult_weight_gain": 12.595238095238098,
-    "adult_hypertension": 8.298333333333327,
-    "baby_meal": 34.091904761904765
+    "overall_mean_reward": 42.99044047619048,
+    "adult_weight_loss": 37.730333333333334,
+    "adult_weight_gain": 47.408392857142864,
+    "adult_hypertension": 36.323035714285716,
+    "baby_meal": 50.5
   },
   {
     "name": "dqn_exp_02",
@@ -21,11 +21,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.3,
     "target_update_interval": 500,
-    "overall_mean_reward": 26.231964285714287,
-    "adult_weight_loss": 26.525,
-    "adult_weight_gain": 33.951904761904764,
-    "adult_hypertension": 30.806666666666665,
-    "baby_meal": 13.644285714285711
+    "overall_mean_reward": 40.87757142857143,
+    "adult_weight_loss": 40.595,
+    "adult_weight_gain": 44.172964285714286,
+    "adult_hypertension": 46.46124999999999,
+    "baby_meal": 32.28107142857143
   },
   {
     "name": "dqn_exp_03",
@@ -35,11 +35,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.3,
     "target_update_interval": 500,
-    "overall_mean_reward": 21.25638558201058,
-    "adult_weight_loss": 16.33851851851852,
-    "adult_weight_gain": 25.315714285714286,
-    "adult_hypertension": 22.347500000000004,
-    "baby_meal": 21.023809523809526
+    "overall_mean_reward": -4.948472222222222,
+    "adult_weight_loss": 5.687777777777777,
+    "adult_weight_gain": -3.025,
+    "adult_hypertension": -8.02,
+    "baby_meal": -14.436666666666664
   },
   {
     "name": "dqn_exp_04",
@@ -49,11 +49,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.3,
     "target_update_interval": 500,
-    "overall_mean_reward": 22.335879629629634,
-    "adult_weight_loss": 25.421851851851855,
-    "adult_weight_gain": 10.992857142857138,
-    "adult_hypertension": 27.721666666666682,
-    "baby_meal": 25.20714285714286
+    "overall_mean_reward": 12.305065711152876,
+    "adult_weight_loss": -6.148000000000021,
+    "adult_weight_gain": 5.228947368421054,
+    "adult_hypertension": -2.263571428571426,
+    "baby_meal": 52.4028869047619
   },
   {
     "name": "dqn_exp_05",
@@ -63,11 +63,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.4,
     "target_update_interval": 500,
-    "overall_mean_reward": 19.84678835978836,
-    "adult_weight_loss": 23.04820105820106,
-    "adult_weight_gain": 6.8819047619047655,
-    "adult_hypertension": 20.731333333333332,
-    "baby_meal": 28.725714285714282
+    "overall_mean_reward": 7.086833333333332,
+    "adult_weight_loss": 1.5054999999999987,
+    "adult_weight_gain": -4.820000000000002,
+    "adult_hypertension": 24.8925,
+    "baby_meal": 6.769333333333333
   },
   {
     "name": "dqn_exp_06",
@@ -77,11 +77,11 @@
     "batch_size": 128,
     "exploration_fraction": 0.4,
     "target_update_interval": 500,
-    "overall_mean_reward": 13.482104497354495,
-    "adult_weight_loss": 13.703703703703706,
-    "adult_weight_gain": 14.549999999999997,
-    "adult_hypertension": 3.81233333333333,
-    "baby_meal": 21.862380952380946
+    "overall_mean_reward": -0.4959937343358427,
+    "adult_weight_loss": 9.315999999999983,
+    "adult_weight_gain": -9.774736842105266,
+    "adult_hypertension": 6.48142857142858,
+    "baby_meal": -8.006666666666668
   },
   {
     "name": "dqn_exp_07",
@@ -91,11 +91,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.4,
     "target_update_interval": 250,
-    "overall_mean_reward": 9.829117063492065,
-    "adult_weight_loss": 16.45111111111111,
-    "adult_weight_gain": -2.447142857142853,
-    "adult_hypertension": 11.449166666666667,
-    "baby_meal": 13.863333333333339
+    "overall_mean_reward": -15.017777568922293,
+    "adult_weight_loss": -0.8901666666666644,
+    "adult_weight_gain": -25.76415789473682,
+    "adult_hypertension": -22.426785714285685,
+    "baby_meal": -10.99
   },
   {
     "name": "dqn_exp_08",
@@ -105,11 +105,11 @@
     "batch_size": 64,
     "exploration_fraction": 0.2,
     "target_update_interval": 250,
-    "overall_mean_reward": 17.232840608465608,
-    "adult_weight_loss": 26.961481481481485,
-    "adult_weight_gain": 11.352380952380948,
-    "adult_hypertension": 14.682500000000001,
-    "baby_meal": 15.934999999999999
+    "overall_mean_reward": 14.32672916666667,
+    "adult_weight_loss": 37.82166666666667,
+    "adult_weight_gain": 27.24000000000001,
+    "adult_hypertension": -12.64875,
+    "baby_meal": 4.894000000000001
   },
   {
     "name": "dqn_exp_09",
@@ -119,11 +119,11 @@
     "batch_size": 128,
     "exploration_fraction": 0.2,
     "target_update_interval": 250,
-    "overall_mean_reward": 20.874656084656085,
-    "adult_weight_loss": 17.76695767195767,
-    "adult_weight_gain": 19.881428571428575,
-    "adult_hypertension": 21.908333333333335,
-    "baby_meal": 23.941904761904766
+    "overall_mean_reward": 29.704299342105262,
+    "adult_weight_loss": 40.07033333333334,
+    "adult_weight_gain": 18.458054511278196,
+    "adult_hypertension": 18.302142857142858,
+    "baby_meal": 41.986666666666665
   },
   {
     "name": "dqn_exp_10",
@@ -133,10 +133,10 @@
     "batch_size": 64,
     "exploration_fraction": 0.35,
     "target_update_interval": 750,
-    "overall_mean_reward": 23.41043650793651,
-    "adult_weight_loss": 17.65888888888889,
-    "adult_weight_gain": 29.568809523809534,
-    "adult_hypertension": 13.281666666666661,
-    "baby_meal": 33.132380952380956
+    "overall_mean_reward": 25.983901550751884,
+    "adult_weight_loss": 18.172500000000003,
+    "adult_weight_gain": 17.21658834586468,
+    "adult_hypertension": 21.922500000000003,
+    "baby_meal": 46.62401785714286
   }
 ]

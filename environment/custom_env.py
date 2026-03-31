@@ -7,30 +7,31 @@ from environment.rendering import render_meal_state
 class KitchenMealPlanningEnv(gym.Env):
     metadata = {"render_modes": ["human"]}
 
-    def __init__(self, max_steps=20):
+    def __init__(self, max_steps=18):
         super().__init__()
         self.max_steps = max_steps
+        self.max_quantity = 3
 
-        # Per-portion approximations. This is still a simplified prototype,
-        # but the food set is more realistic and diverse than the original one.
+        # Per-portion approximations. Simplified but intentionally diverse.
         self.ingredients = [
-            {"name": "rice", "group": "carb", "texture": "soft", "baby_ok": True,  "cal": 130, "protein": 2.7, "carbs": 28.0, "fat": 0.3, "fiber": 0.4, "sodium": 1},
-            {"name": "beans", "group": "protein", "texture": "soft", "baby_ok": True,  "cal": 127, "protein": 8.7, "carbs": 22.8, "fat": 0.5, "fiber": 6.4, "sodium": 2},
-            {"name": "chicken", "group": "protein", "texture": "soft", "baby_ok": True,  "cal": 165, "protein": 31.0, "carbs": 0.0, "fat": 3.6, "fiber": 0.0, "sodium": 74},
-            {"name": "egg", "group": "protein", "texture": "soft", "baby_ok": True,  "cal": 78,  "protein": 6.3, "carbs": 0.6, "fat": 5.3, "fiber": 0.0, "sodium": 62},
-            {"name": "yogurt", "group": "dairy", "texture": "soft", "baby_ok": True,  "cal": 59,  "protein": 10.0, "carbs": 3.6, "fat": 0.4, "fiber": 0.0, "sodium": 36},
-            {"name": "oil", "group": "fat", "texture": "soft", "baby_ok": False, "cal": 119, "protein": 0.0, "carbs": 0.0, "fat": 13.5, "fiber": 0.0, "sodium": 0},
-            {"name": "cabbage", "group": "vegetable", "texture": "soft", "baby_ok": True,  "cal": 25,  "protein": 1.3, "carbs": 5.8, "fat": 0.1, "fiber": 2.5, "sodium": 18},
-            {"name": "carrot", "group": "vegetable", "texture": "soft", "baby_ok": True,  "cal": 41,  "protein": 0.9, "carbs": 10.0, "fat": 0.2, "fiber": 2.8, "sodium": 69},
-            {"name": "spinach", "group": "vegetable", "texture": "soft", "baby_ok": True,  "cal": 23,  "protein": 2.9, "carbs": 3.6, "fat": 0.4, "fiber": 2.2, "sodium": 79},
-            {"name": "sweet_potato", "group": "carb", "texture": "soft", "baby_ok": True,  "cal": 86,  "protein": 1.6, "carbs": 20.1, "fat": 0.1, "fiber": 3.0, "sodium": 55},
-            {"name": "banana", "group": "fruit", "texture": "soft", "baby_ok": True,  "cal": 89,  "protein": 1.1, "carbs": 23.0, "fat": 0.3, "fiber": 2.6, "sodium": 1},
-            {"name": "avocado", "group": "fat", "texture": "soft", "baby_ok": True,  "cal": 160, "protein": 2.0, "carbs": 8.5, "fat": 14.7, "fiber": 6.7, "sodium": 7},
-            {"name": "soy_sauce", "group": "seasoning", "texture": "liquid", "baby_ok": False, "cal": 9,   "protein": 1.3, "carbs": 0.8, "fat": 0.0, "fiber": 0.1, "sodium": 879},
+            {"name": "rice", "group": "carb", "baby_ok": True,  "cal": 130, "protein": 2.7, "carbs": 28.0, "fat": 0.3, "fiber": 0.4, "sodium": 1},
+            {"name": "beans", "group": "protein", "baby_ok": True,  "cal": 127, "protein": 8.7, "carbs": 22.8, "fat": 0.5, "fiber": 6.4, "sodium": 2},
+            {"name": "chicken", "group": "protein", "baby_ok": True,  "cal": 165, "protein": 31.0, "carbs": 0.0, "fat": 3.6, "fiber": 0.0, "sodium": 74},
+            {"name": "egg", "group": "protein", "baby_ok": True,  "cal": 78,  "protein": 6.3, "carbs": 0.6, "fat": 5.3, "fiber": 0.0, "sodium": 62},
+            {"name": "yogurt", "group": "dairy", "baby_ok": True,  "cal": 59,  "protein": 10.0, "carbs": 3.6, "fat": 0.4, "fiber": 0.0, "sodium": 36},
+            {"name": "milk", "group": "dairy", "baby_ok": True,  "cal": 61,  "protein": 3.2, "carbs": 4.8, "fat": 3.3, "fiber": 0.0, "sodium": 43},
+            {"name": "cabbage", "group": "vegetable", "baby_ok": True,  "cal": 25,  "protein": 1.3, "carbs": 5.8, "fat": 0.1, "fiber": 2.5, "sodium": 18},
+            {"name": "carrot", "group": "vegetable", "baby_ok": True,  "cal": 41,  "protein": 0.9, "carbs": 10.0, "fat": 0.2, "fiber": 2.8, "sodium": 69},
+            {"name": "spinach", "group": "vegetable", "baby_ok": True,  "cal": 23,  "protein": 2.9, "carbs": 3.6, "fat": 0.4, "fiber": 2.2, "sodium": 79},
+            {"name": "sweet_potato", "group": "carb", "baby_ok": True,  "cal": 86,  "protein": 1.6, "carbs": 20.1, "fat": 0.1, "fiber": 3.0, "sodium": 55},
+            {"name": "banana", "group": "fruit", "baby_ok": True,  "cal": 89,  "protein": 1.1, "carbs": 23.0, "fat": 0.3, "fiber": 2.6, "sodium": 1},
+            {"name": "avocado", "group": "fat", "baby_ok": True,  "cal": 160, "protein": 2.0, "carbs": 8.5, "fat": 14.7, "fiber": 6.7, "sodium": 7},
+            {"name": "oil", "group": "fat", "baby_ok": False, "cal": 119, "protein": 0.0, "carbs": 0.0, "fat": 13.5, "fiber": 0.0, "sodium": 0},
+            {"name": "soy_sauce", "group": "seasoning", "baby_ok": False, "cal": 9, "protein": 1.3, "carbs": 0.8, "fat": 0.0, "fiber": 0.1, "sodium": 879},
         ]
 
         self.num_ingredients = len(self.ingredients)
-        self.max_quantity = 4
+        self.name_to_idx = {ing["name"]: i for i, ing in enumerate(self.ingredients)}
 
         self.goals = ["weight_loss", "weight_gain", "maintenance", "baby_safe"]
         self.conditions = ["none", "hypertension", "baby"]
@@ -44,13 +45,15 @@ class KitchenMealPlanningEnv(gym.Env):
                 "age_group": "adult",
                 "target_calories": 450,
                 "max_sodium": 500,
-                "target_protein": 28,
+                "target_protein": 30,
                 "target_fiber": 12,
                 "max_fat": 22,
-                "max_items": 6,
+                "max_items": 5,
                 "min_diversity": 3,
                 "required_groups": ["protein", "vegetable"],
                 "forbidden": [],
+                "preferred_templates": ["lean_plate", "light_bowl"],
+                "banned_templates": ["sauce_heavy"],
             },
             {
                 "name": "adult_weight_gain",
@@ -59,13 +62,15 @@ class KitchenMealPlanningEnv(gym.Env):
                 "age_group": "adult",
                 "target_calories": 700,
                 "max_sodium": 700,
-                "target_protein": 35,
+                "target_protein": 38,
                 "target_fiber": 10,
                 "max_fat": 35,
-                "max_items": 7,
+                "max_items": 6,
                 "min_diversity": 3,
                 "required_groups": ["protein", "carb", "vegetable"],
                 "forbidden": [],
+                "preferred_templates": ["gain_plate", "protein_bowl"],
+                "banned_templates": ["sauce_heavy"],
             },
             {
                 "name": "adult_hypertension",
@@ -74,13 +79,15 @@ class KitchenMealPlanningEnv(gym.Env):
                 "age_group": "adult",
                 "target_calories": 500,
                 "max_sodium": 350,
-                "target_protein": 25,
+                "target_protein": 28,
                 "target_fiber": 12,
                 "max_fat": 25,
-                "max_items": 6,
+                "max_items": 5,
                 "min_diversity": 3,
-                "required_groups": ["protein", "vegetable", "fruit"],
+                "required_groups": ["protein", "vegetable", "fruit_or_carb"],
                 "forbidden": ["soy_sauce"],
+                "preferred_templates": ["hypertension_plate", "light_bowl"],
+                "banned_templates": ["sauce_heavy"],
             },
             {
                 "name": "baby_meal",
@@ -96,8 +103,54 @@ class KitchenMealPlanningEnv(gym.Env):
                 "min_diversity": 3,
                 "required_groups": ["protein", "vegetable", "fruit_or_carb"],
                 "forbidden": ["soy_sauce", "oil"],
+                "preferred_templates": ["baby_soft_meal", "baby_breakfast"],
+                "banned_templates": ["sauce_heavy"],
             },
         ]
+
+        # Meal templates discourage single-food exploitation and encourage plate-like meals.
+        self.meal_templates = {
+            "lean_plate": {
+                "members": ["chicken", "carrot", "spinach", "rice", "sweet_potato"],
+                "required_any": [["chicken", "beans", "egg", "yogurt"], ["carrot", "spinach", "cabbage"]],
+                "bonus": 2.0,
+            },
+            "light_bowl": {
+                "members": ["beans", "rice", "cabbage", "carrot", "banana"],
+                "required_any": [["beans", "chicken", "egg"], ["cabbage", "carrot", "spinach"]],
+                "bonus": 2.0,
+            },
+            "gain_plate": {
+                "members": ["rice", "chicken", "beans", "avocado", "cabbage", "sweet_potato"],
+                "required_any": [["rice", "sweet_potato"], ["chicken", "beans", "egg"], ["cabbage", "carrot", "spinach"]],
+                "bonus": 2.8,
+            },
+            "protein_bowl": {
+                "members": ["beans", "egg", "yogurt", "rice", "banana"],
+                "required_any": [["beans", "egg", "yogurt"], ["rice", "banana", "sweet_potato"]],
+                "bonus": 2.0,
+            },
+            "hypertension_plate": {
+                "members": ["rice", "beans", "banana", "spinach", "cabbage", "chicken"],
+                "required_any": [["beans", "chicken", "egg", "yogurt"], ["spinach", "cabbage", "carrot"], ["banana", "rice", "sweet_potato"]],
+                "bonus": 2.5,
+            },
+            "baby_soft_meal": {
+                "members": ["sweet_potato", "banana", "yogurt", "egg", "carrot", "rice"],
+                "required_any": [["sweet_potato", "rice", "banana"], ["yogurt", "egg", "beans"], ["carrot", "banana"]],
+                "bonus": 3.4,
+            },
+            "baby_breakfast": {
+                "members": ["banana", "yogurt", "milk", "egg", "rice"],
+                "required_any": [["banana", "rice"], ["yogurt", "milk", "egg"]],
+                "bonus": 3.0,
+            },
+            "sauce_heavy": {
+                "members": ["soy_sauce", "oil"],
+                "required_any": [["soy_sauce"], ["oil"]],
+                "bonus": -4.0,
+            },
+        }
 
         self.action_space = spaces.Discrete(self.num_ingredients * 2 + 1)
 
@@ -108,7 +161,7 @@ class KitchenMealPlanningEnv(gym.Env):
             + len(self.conditions)
             + len(self.age_groups)
             + 5
-            + 1
+            + 4
         )
 
         self.observation_space = spaces.Box(
@@ -163,17 +216,17 @@ class KitchenMealPlanningEnv(gym.Env):
         reward -= 0.03
 
         if np.array_equal(old_quantities, self.quantities) and not terminated:
-            reward -= 0.20
+            reward -= 0.30
 
         if not terminated and self._near_good_meal():
-            reward -= 0.15
+            reward -= 0.18
 
         if terminated:
             reward += self._final_bonus()
 
         if self.current_step >= self.max_steps:
             truncated = True
-            reward -= 0.75
+            reward -= 0.80
 
         return self._get_obs(), float(reward), terminated, truncated, self._get_info()
 
@@ -208,7 +261,12 @@ class KitchenMealPlanningEnv(gym.Env):
             sc["max_fat"] / 60.0,
         ], dtype=np.float32)
 
-        progress = np.array([self.current_step / self.max_steps], dtype=np.float32)
+        meal_meta = np.array([
+            min(self._diversity() / 5.0, 1.0),
+            min(np.sum(self.quantities) / max(sc["max_items"], 1), 1.0),
+            min(self._template_match_score() / 4.0, 1.0),
+            min(self.current_step / self.max_steps, 1.0),
+        ], dtype=np.float32)
 
         return np.concatenate([
             quantities_norm.astype(np.float32),
@@ -217,7 +275,7 @@ class KitchenMealPlanningEnv(gym.Env):
             cond_vec,
             age_vec,
             targets,
-            progress,
+            meal_meta,
         ]).astype(np.float32)
 
     def _nutrition(self):
@@ -231,175 +289,303 @@ class KitchenMealPlanningEnv(gym.Env):
             totals["sodium"] += q * ing["sodium"]
         return totals
 
-    def _group_counts(self):
-        counts = {}
-        for q, ing in zip(self.quantities, self.ingredients):
-            if q > 0:
-                counts[ing["group"]] = counts.get(ing["group"], 0) + 1
-        return counts
-
     def _diversity(self):
         return int(np.sum(self.quantities > 0))
+
+    def _present_groups(self):
+        return {ing["group"] for q, ing in zip(self.quantities, self.ingredients) if q > 0}
+
+    def _ingredient_index(self, name):
+        return self.name_to_idx[name]
 
     def _repetition_penalty(self):
         penalty = 0.0
         for q in self.quantities:
+            if q > 1:
+                penalty += (q - 1) * 1.0
             if q > 2:
-                penalty += (q - 2) * 1.25
+                penalty += (q - 2) * 2.0
         return penalty
+
+    def _single_food_penalty(self):
+        diversity = self._diversity()
+        total_items = int(np.sum(self.quantities))
+        if total_items >= 2 and diversity == 1:
+            return 8.0
+        if total_items >= 3 and diversity == 2:
+            return 2.5
+        return 0.0
 
     def _scenario_forbidden_penalty(self):
         sc = self.current_scenario
         penalty = 0.0
         for forbidden_name in sc.get("forbidden", []):
             idx = self._ingredient_index(forbidden_name)
-            penalty += self.quantities[idx] * 4.0
+            penalty += self.quantities[idx] * 6.0
         return penalty
 
     def _baby_unsuitable_penalty(self):
         if self.current_scenario["condition"] != "baby":
             return 0.0
+
         penalty = 0.0
         for q, ing in zip(self.quantities, self.ingredients):
             if q > 0 and not ing["baby_ok"]:
-                penalty += q * 5.0
+                penalty += q * 7.0
+
+        # Baby meals should not be dominated by one or two ingredients.
+        for limited_name in ["beans", "yogurt", "milk"]:
+            idx = self._ingredient_index(limited_name)
+            if self.quantities[idx] > 1:
+                penalty += (self.quantities[idx] - 1) * 2.8
+
+        if self.quantities[self._ingredient_index("banana")] > 1:
+            penalty += (self.quantities[self._ingredient_index("banana")] - 1) * 1.8
+
         return penalty
 
     def _group_bonus(self):
         sc = self.current_scenario
-        present_groups = {ing["group"] for q, ing in zip(self.quantities, self.ingredients) if q > 0}
+        present_groups = self._present_groups()
         bonus = 0.0
+
         for req in sc.get("required_groups", []):
             if req == "fruit_or_carb":
                 if "fruit" in present_groups or "carb" in present_groups:
-                    bonus += 1.0
+                    bonus += 1.5
             elif req in present_groups:
-                bonus += 1.0
+                bonus += 1.5
+
         return bonus
+
+    def _missing_required_group_penalty(self):
+        sc = self.current_scenario
+        present_groups = self._present_groups()
+        penalty = 0.0
+
+        for req in sc.get("required_groups", []):
+            if req == "fruit_or_carb":
+                if "fruit" not in present_groups and "carb" not in present_groups:
+                    penalty += 3.0
+            elif req not in present_groups:
+                penalty += 3.0
+
+        return penalty
+
+    def _diversity_bonus(self):
+        sc = self.current_scenario
+        diversity = self._diversity()
+
+        if diversity >= sc["min_diversity"]:
+            return 3.5
+        if diversity == sc["min_diversity"] - 1:
+            return 1.0
+        return -3.0
 
     def _target_alignment(self, value, target, tolerance, weight):
         diff = abs(value - target)
         return max(0.0, weight * (1.0 - diff / max(tolerance, 1e-6)))
 
-    def _meal_score(self):
-        n = self._nutrition()
+    def _macro_balance_bonus(self, nutrition):
         sc = self.current_scenario
-        total_items = int(np.sum(self.quantities))
-        diversity = self._diversity()
+        bonus = 0.0
+        bonus += self._target_alignment(
+            min(nutrition["protein"], sc["target_protein"]),
+            sc["target_protein"],
+            max(sc["target_protein"], 1.0),
+            3.2,
+        )
+        bonus += self._target_alignment(
+            min(nutrition["fiber"], sc["target_fiber"]),
+            sc["target_fiber"],
+            max(sc["target_fiber"], 1.0),
+            2.7,
+        )
+        return bonus
 
-        if total_items == 0:
-            return -2.5
+    def _calorie_score(self, nutrition):
+        sc = self.current_scenario
+        return self._target_alignment(
+            nutrition["cal"],
+            sc["target_calories"],
+            sc["target_calories"] * 0.16,
+            7.5,
+        )
 
+    def _safety_score(self, nutrition):
+        sc = self.current_scenario
         score = 0.0
 
-        # Base target alignment
-        score += self._target_alignment(n["cal"], sc["target_calories"], sc["target_calories"] * 0.45, 6.0)
-        score += self._target_alignment(min(n["protein"], sc["target_protein"]), sc["target_protein"], sc["target_protein"], 3.0)
-        score += self._target_alignment(min(n["fiber"], sc["target_fiber"]), sc["target_fiber"], max(sc["target_fiber"], 1.0), 2.5)
-
-        # Hard penalties for exceeding safety limits
-        if n["sodium"] > sc["max_sodium"]:
-            score -= (n["sodium"] - sc["max_sodium"]) * 0.04
+        if nutrition["sodium"] <= sc["max_sodium"]:
+            score += 2.0
         else:
-            score += 1.5
+            score -= (nutrition["sodium"] - sc["max_sodium"]) * 0.06
 
-        if n["fat"] > sc["max_fat"]:
-            score -= (n["fat"] - sc["max_fat"]) * 0.30
-
-        if total_items > sc["max_items"]:
-            score -= (total_items - sc["max_items"]) * 1.8
-
-        # Encourage variety, but not random clutter
-        if diversity >= sc["min_diversity"]:
-            score += 2.5
-        elif diversity == sc["min_diversity"] - 1:
+        if nutrition["fat"] <= sc["max_fat"]:
             score += 1.0
         else:
-            score -= 1.5
+            score -= (nutrition["fat"] - sc["max_fat"]) * 0.40
 
-        score += self._group_bonus()
-        score -= self._repetition_penalty()
-        score -= self._scenario_forbidden_penalty()
-        score -= self._baby_unsuitable_penalty()
+        return score
 
-        # Scenario-specific shaping
+    def _portion_penalty(self):
+        sc = self.current_scenario
+        total_items = int(np.sum(self.quantities))
+        if total_items <= sc["max_items"]:
+            return 0.0
+        return (total_items - sc["max_items"]) * 2.5
+
+    def _template_satisfied(self, template_name):
+        template = self.meal_templates[template_name]
+        present = {ing["name"] for q, ing in zip(self.quantities, self.ingredients) if q > 0}
+
+        # Must include at least 2 items from members and satisfy all required_any clauses.
+        member_hits = len([name for name in template["members"] if name in present])
+        if member_hits < 2:
+            return False
+
+        for clause in template["required_any"]:
+            if not any(name in present for name in clause):
+                return False
+
+        return True
+
+    def _template_match_score(self):
+        sc = self.current_scenario
+        score = 0.0
+
+        for template_name in sc.get("preferred_templates", []):
+            if self._template_satisfied(template_name):
+                score += self.meal_templates[template_name]["bonus"]
+
+        for template_name in sc.get("banned_templates", []):
+            if self._template_satisfied(template_name):
+                score += self.meal_templates[template_name]["bonus"]
+
+        return score
+
+    def _scenario_specific_adjustment(self, nutrition):
+        sc = self.current_scenario
+        adjustment = 0.0
+        present_groups = self._present_groups()
+
         if sc["goal"] == "weight_loss":
-            if n["cal"] > sc["target_calories"] * 1.1:
-                score -= (n["cal"] - sc["target_calories"] * 1.1) / 18.0
+            if nutrition["cal"] > sc["target_calories"] * 1.08:
+                adjustment -= (nutrition["cal"] - sc["target_calories"] * 1.08) / 18.0
+            if "vegetable" in present_groups:
+                adjustment += 0.8
 
         elif sc["goal"] == "weight_gain":
-            if n["cal"] < sc["target_calories"] * 0.85:
-                score -= (sc["target_calories"] * 0.85 - n["cal"]) / 30.0
-            if n["protein"] >= sc["target_protein"]:
-                score += 1.5
+            if nutrition["cal"] < sc["target_calories"] * 0.90:
+                adjustment -= (sc["target_calories"] * 0.90 - nutrition["cal"]) / 20.0
+            if nutrition["protein"] >= sc["target_protein"]:
+                adjustment += 1.6
+            if "carb" in present_groups:
+                adjustment += 0.9
 
         elif sc["goal"] == "maintenance":
-            score -= abs(n["cal"] - sc["target_calories"]) / 80.0
+            adjustment -= abs(nutrition["cal"] - sc["target_calories"]) / 100.0
+            if sc["condition"] == "hypertension":
+                adjustment -= nutrition["sodium"] * 0.015
+                if self.quantities[self._ingredient_index("soy_sauce")] > 0:
+                    adjustment -= 8.0
 
         elif sc["goal"] == "baby_safe":
-            # Gentle, diverse, baby-appropriate meals.
-            if n["cal"] > 350:
-                score -= (n["cal"] - 350) / 12.0
-            if n["sodium"] > 120:
-                score -= (n["sodium"] - 120) * 0.06
-            # Extra reward for baby-friendly variety
-            for name in ["banana", "carrot", "sweet_potato", "yogurt", "egg"]:
+            if nutrition["cal"] > 320:
+                adjustment -= (nutrition["cal"] - 320) / 12.0
+            if nutrition["protein"] >= 8:
+                adjustment += 1.2
+            for name in ["banana", "carrot", "sweet_potato", "yogurt", "egg", "rice", "milk"]:
                 idx = self._ingredient_index(name)
                 if self.quantities[idx] > 0:
-                    score += 0.8
+                    adjustment += 0.7
 
-        if sc["condition"] == "hypertension":
-            score -= n["sodium"] * 0.02
-            if self.quantities[self._ingredient_index("soy_sauce")] > 0:
-                score -= 6.0
+        return adjustment
+
+    def _meal_score(self):
+        nutrition = self._nutrition()
+        total_items = int(np.sum(self.quantities))
+
+        if total_items == 0:
+            return -3.5
+
+        score = 0.0
+        score += self._calorie_score(nutrition)
+        score += self._macro_balance_bonus(nutrition)
+        score += self._safety_score(nutrition)
+        score += self._group_bonus()
+        score += self._diversity_bonus()
+        score += self._template_match_score()
+        score += self._scenario_specific_adjustment(nutrition)
+
+        score -= self._missing_required_group_penalty()
+        score -= self._repetition_penalty()
+        score -= self._single_food_penalty()
+        score -= self._portion_penalty()
+        score -= self._scenario_forbidden_penalty()
+        score -= self._baby_unsuitable_penalty()
 
         return score
 
     def _near_good_meal(self):
-        n = self._nutrition()
+        nutrition = self._nutrition()
         sc = self.current_scenario
-        total_items = int(np.sum(self.quantities))
         diversity = self._diversity()
+        present_groups = self._present_groups()
+
+        required_ok = True
+        for req in sc.get("required_groups", []):
+            if req == "fruit_or_carb":
+                if "fruit" not in present_groups and "carb" not in present_groups:
+                    required_ok = False
+            elif req not in present_groups:
+                required_ok = False
+
         return (
-            abs(n["cal"] - sc["target_calories"]) <= sc["target_calories"] * 0.12
-            and n["sodium"] <= sc["max_sodium"]
-            and total_items <= sc["max_items"]
+            abs(nutrition["cal"] - sc["target_calories"]) <= sc["target_calories"] * 0.10
+            and nutrition["sodium"] <= sc["max_sodium"]
+            and nutrition["fat"] <= sc["max_fat"]
             and diversity >= sc["min_diversity"]
+            and required_ok
+            and self._repetition_penalty() <= 1.5
+            and self._single_food_penalty() == 0
         )
 
     def _final_bonus(self):
-        n = self._nutrition()
+        nutrition = self._nutrition()
         sc = self.current_scenario
         total_items = int(np.sum(self.quantities))
         diversity = self._diversity()
 
         if total_items == 0:
-            return -5.0
+            return -7.0
 
         bonus = 0.0
 
         if total_items <= sc["max_items"]:
             bonus += 2.0
         if diversity >= sc["min_diversity"]:
-            bonus += 2.5
-        if n["sodium"] <= sc["max_sodium"]:
-            bonus += 2.0
-        if abs(n["cal"] - sc["target_calories"]) <= sc["target_calories"] * 0.12:
             bonus += 3.0
-        if n["protein"] >= sc["target_protein"] * 0.8:
+        if self._missing_required_group_penalty() == 0:
+            bonus += 3.0
+        if nutrition["sodium"] <= sc["max_sodium"]:
+            bonus += 2.0
+        if nutrition["fat"] <= sc["max_fat"]:
+            bonus += 1.0
+        if abs(nutrition["cal"] - sc["target_calories"]) <= sc["target_calories"] * 0.10:
+            bonus += 3.0
+        if nutrition["protein"] >= sc["target_protein"] * 0.85:
+            bonus += 2.0
+        if nutrition["fiber"] >= sc["target_fiber"] * 0.85:
             bonus += 1.5
-        if n["fiber"] >= sc["target_fiber"] * 0.8:
-            bonus += 1.0
-        if self._repetition_penalty() == 0:
-            bonus += 1.0
+        if self._repetition_penalty() <= 1.0:
+            bonus += 1.5
+        if self._single_food_penalty() == 0:
+            bonus += 2.0
+        if self._template_match_score() > 0:
+            bonus += 2.0
 
         return bonus
-
-    def _ingredient_index(self, name):
-        for i, ing in enumerate(self.ingredients):
-            if ing["name"] == name:
-                return i
-        raise ValueError(f"Ingredient '{name}' not found.")
 
     def _get_info(self):
         return {
