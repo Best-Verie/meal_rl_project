@@ -7,11 +7,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 23.348541666666662,
-    "adult_weight_loss": 27.479999999999997,
-    "adult_weight_gain": 28.21333333333333,
-    "adult_hypertension": 20.7575,
-    "baby_meal": 16.94333333333333
+    "overall_mean_reward": 27.176203703703706,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 26.86047619047619,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 29.597857142857144
   },
   {
     "name": "ppo_exp_02",
@@ -21,11 +21,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 22.517833333333336,
-    "adult_weight_loss": 25.848000000000003,
-    "adult_weight_gain": 26.410000000000004,
-    "adult_hypertension": 19.43,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 22.829900793650793,
+    "adult_weight_loss": 17.881984126984126,
+    "adult_weight_gain": 19.938095238095237,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 28.214523809523815
   },
   {
     "name": "ppo_exp_03",
@@ -35,11 +35,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 25.683541666666663,
-    "adult_weight_loss": 30.410000000000004,
-    "adult_weight_gain": 28.726666666666667,
-    "adult_hypertension": 22.9625,
-    "baby_meal": 20.634999999999998
+    "overall_mean_reward": 31.090335317460323,
+    "adult_weight_loss": 32.522222222222226,
+    "adult_weight_gain": 32.65571428571429,
+    "adult_hypertension": 25.091500000000003,
+    "baby_meal": 34.091904761904765
   },
   {
     "name": "ppo_exp_04",
@@ -49,11 +49,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 24.421791666666664,
-    "adult_weight_loss": 28.727999999999998,
-    "adult_weight_gain": 28.21333333333333,
-    "adult_hypertension": 22.3625,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 28.293304894179897,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 32.90571428571429,
+    "adult_hypertension": 25.091500000000003,
+    "baby_meal": 28.214523809523815
   },
   {
     "name": "ppo_exp_05",
@@ -63,11 +63,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 22.930416666666666,
-    "adult_weight_loss": 27.479999999999997,
-    "adult_weight_gain": 26.136666666666663,
-    "adult_hypertension": 19.015,
-    "baby_meal": 19.09
+    "overall_mean_reward": 27.26852513227513,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 32.65571428571429,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 24.171904761904763
   },
   {
     "name": "ppo_exp_06",
@@ -77,11 +77,11 @@
     "batch_size": 128,
     "ent_coef": 0.01,
     "clip_range": 0.2,
-    "overall_mean_reward": 22.15083333333333,
-    "adult_weight_loss": 27.479999999999997,
-    "adult_weight_gain": 23.31,
-    "adult_hypertension": 19.43,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 27.26852513227513,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 32.65571428571429,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 24.171904761904763
   },
   {
     "name": "ppo_exp_07",
@@ -91,11 +91,11 @@
     "batch_size": 64,
     "ent_coef": 0.001,
     "clip_range": 0.2,
-    "overall_mean_reward": 24.438124999999996,
-    "adult_weight_loss": 27.479999999999997,
-    "adult_weight_gain": 28.21333333333333,
-    "adult_hypertension": 20.7575,
-    "baby_meal": 21.301666666666666
+    "overall_mean_reward": 28.509376322751326,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 33.77,
+    "adult_hypertension": 25.091500000000003,
+    "baby_meal": 28.214523809523815
   },
   {
     "name": "ppo_exp_08",
@@ -105,11 +105,11 @@
     "batch_size": 64,
     "ent_coef": 0.02,
     "clip_range": 0.2,
-    "overall_mean_reward": 24.5325,
-    "adult_weight_loss": 30.410000000000004,
-    "adult_weight_gain": 28.726666666666667,
-    "adult_hypertension": 20.61,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 28.230804894179897,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 32.65571428571429,
+    "adult_hypertension": 25.091500000000003,
+    "baby_meal": 28.214523809523815
   },
   {
     "name": "ppo_exp_09",
@@ -119,11 +119,11 @@
     "batch_size": 64,
     "ent_coef": 0.01,
     "clip_range": 0.1,
-    "overall_mean_reward": 22.00033333333333,
-    "adult_weight_loss": 25.848000000000003,
-    "adult_weight_gain": 24.34,
-    "adult_hypertension": 19.43,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 22.04767195767196,
+    "adult_weight_loss": 16.40925925925926,
+    "adult_weight_gain": 26.86047619047619,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 19.635952380952382
   },
   {
     "name": "ppo_exp_10",
@@ -133,10 +133,10 @@
     "batch_size": 128,
     "ent_coef": 0.005,
     "clip_range": 0.25,
-    "overall_mean_reward": 22.586,
-    "adult_weight_loss": 26.394,
-    "adult_weight_gain": 26.136666666666663,
-    "adult_hypertension": 19.43,
-    "baby_meal": 18.383333333333333
+    "overall_mean_reward": 25.819715608465607,
+    "adult_weight_loss": 26.961481481481485,
+    "adult_weight_gain": 26.86047619047619,
+    "adult_hypertension": 25.284999999999997,
+    "baby_meal": 24.171904761904763
   }
 ]
