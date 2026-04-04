@@ -9,8 +9,8 @@ import pandas as pd
 # ---------------------------
 st.set_page_config(page_title="Meal Planning AI", layout="wide")
 
-st.title(" Meal Planning AI")
-st.markdown("Generate optimized meals using Reinforcement Learning")
+st.title(" MEAL Planning AI")
+st.markdown("Generate optimized meals based on different scenarios.")
 
 # ---------------------------
 # LOAD MODEL (cached)
@@ -110,7 +110,7 @@ def generate_meal():
 # ---------------------------
 # MAIN BUTTON
 # ---------------------------
-if st.button("🚀 Generate Meal Plan"):
+if st.button(" Generate Meal Plan"):
 
     final_meal, rewards, total_reward, nutrition, step_data = generate_meal()
 
@@ -131,7 +131,7 @@ if st.button("🚀 Generate Meal Plan"):
         # NUTRITION
         # ---------------------------
         with col2:
-            st.subheader("📊 Nutrition Summary")
+            st.subheader(" Nutrition Summary")
 
             if nutrition:
                 df = pd.DataFrame(nutrition.items(), columns=["Nutrient", "Value"])
@@ -152,7 +152,7 @@ if st.button("🚀 Generate Meal Plan"):
         # ---------------------------
         # REWARD
         # ---------------------------
-        st.subheader("🏆 Total Reward")
+        st.subheader(" Total Reward")
         st.success(f"{round(total_reward, 2)}")
 
         # ---------------------------
@@ -161,9 +161,3 @@ if st.button("🚀 Generate Meal Plan"):
         if show_steps:
             st.subheader("🧠 Decision Process")
             st.dataframe(pd.DataFrame(step_data))
-
-        # ---------------------------
-        # REWARD CHART
-        # ---------------------------
-        st.subheader("📈 Reward per Step")
-        st.line_chart(rewards)

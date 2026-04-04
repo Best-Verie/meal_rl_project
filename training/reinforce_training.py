@@ -3,6 +3,7 @@ import sys
 import json
 import math
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -10,9 +11,8 @@ import torch.optim as optim
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
-    
-from environment.custom_env import KitchenMealPlanningEnv
 
+from environment.custom_env import KitchenMealPlanningEnv
 
 
 SCENARIOS = [
@@ -96,7 +96,7 @@ def compute_returns(rewards, gamma, device):
     return returns
 
 
-def evaluate_on_scenario(policy, device, scenario_name, n_episodes=10):
+def evaluate_on_scenario(policy, device, scenario_name, n_episodes=5):
     rewards = []
 
     for _ in range(n_episodes):
@@ -110,14 +110,7 @@ def evaluate_on_scenario(policy, device, scenario_name, n_episodes=10):
         )
         rewards.append(total_reward)
 
-    return {
-        "scenario": scenario_name,
-        "mean_reward": float(np.mean(rewards)),
-        "std_reward": float(np.std(rewards)),
-        "min_reward": float(np.min(rewards)),
-        "max_reward": float(np.max(rewards)),
-    }
-
+    return float(np.mean(rewards))
 
 def save_model(policy, path, obs_dim, action_dim):
     clean_payload = {
@@ -129,13 +122,29 @@ def save_model(policy, path, obs_dim, action_dim):
 
 
 def load_model(path, device):
-    payload = torch.load(path, map_location=device, weights_only=False)
-    model = PolicyNetwork(int(payload["obs_dim"]), int(payload["action_dim"])).to(device)
-    model.load_state_dict(payload["state_dict"])
+    payload = torch.load(path, map_location=device)
+
+    # CASE 1: New format (correct)
+    if isinstance(payload, dict) and "state_dict" in payload:
+        obs_dim = int(payload["obs_dim"])
+        action_dim = int(payload["action_dim"])
+        state_dict = payload["state_dict"]
+
+    # CASE 2: Old format (weights only)
+    else:
+        env = KitchenMealPlanningEnv()
+        obs, _ = env.reset()
+
+        obs_dim = int(obs.shape[0])
+        action_dim = int(env.action_space.n)
+        state_dict = payload
+
+    model = PolicyNetwork(obs_dim, action_dim).to(device)
+    model.load_state_dict(state_dict)
     model.eval()
+
     return model
-
-
+    
 def main():
     os.makedirs("models/reinforce", exist_ok=True)
     os.makedirs("best_models/reinforce", exist_ok=True)
@@ -157,17 +166,19 @@ def main():
     entropy_coef = 0.001
     eval_freq = 200
 
-    training_rewards = []
-    best_overall_mean = -math.inf
+    #  LOG STORAGE
+    reward_log = []
+    loss_log = []
+    entropy_log = []
+    eval_log = []
+
+    best_score = -math.inf
 
     for episode in range(1, num_episodes + 1):
         env = make_env()
-        log_probs, rewards, entropies, total_reward, info = run_episode(
-            env=env,
-            policy=policy,
-            device=device,
-            deterministic=False,
-            scenario_name=None,
+
+        log_probs, rewards, entropies, total_reward, _ = run_episode(
+            env, policy, device
         )
 
         returns = compute_returns(rewards, gamma, device)
@@ -181,100 +192,62 @@ def main():
 
         policy_loss = torch.stack(policy_loss_terms).sum()
         entropy_bonus = torch.stack(entropy_terms).mean()
+
         loss = policy_loss - entropy_coef * entropy_bonus
 
         optimizer.zero_grad()
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(policy.parameters(), max_norm=1.0)
+        torch.nn.utils.clip_grad_norm_(policy.parameters(), 1.0)
         optimizer.step()
 
-        training_rewards.append(total_reward)
+        #  SAVE LOGS
+        reward_log.append(total_reward)
+        loss_log.append(loss.item())
+        entropy_log.append(entropy_bonus.item())
 
+        # PRINT
         if episode % 50 == 0:
-            recent_mean = float(np.mean(training_rewards[-50:]))
-            print(
-                f"Episode {episode}/{num_episodes} | "
-                f"Recent Mean Reward: {recent_mean:.2f} | "
-                f"Last Reward: {total_reward:.2f} | "
-                f"Loss: {loss.item():.4f}"
-            )
+            print(f"Episode {episode} | Reward: {total_reward:.2f}")
 
+        #  EVALUATION LOG (VERY IMPORTANT)
         if episode % eval_freq == 0:
-            scenario_results = []
+            scores = []
+
             for scenario in SCENARIOS:
-                result = evaluate_on_scenario(policy, device, scenario, n_episodes=5)
-                scenario_results.append(result)
+                score = evaluate_on_scenario(policy, device, scenario)
+                scores.append(score)
 
-            overall_mean = float(np.mean([r["mean_reward"] for r in scenario_results]))
-            print(f"\n[Eval @ episode {episode}] overall mean reward: {overall_mean:.2f}")
-            for r in scenario_results:
-                print(
-                    f"  {r['scenario']}: "
-                    f"mean={r['mean_reward']:.2f}, std={r['std_reward']:.2f}"
-                )
+            mean_score = float(np.mean(scores))
 
-            if overall_mean > best_overall_mean:
-                best_overall_mean = overall_mean
-                save_model(
-                    policy,
-                    "best_models/reinforce/best_model.pt",
-                    obs_dim,
-                    action_dim,
-                )
-                print("  Saved new best REINFORCE model.")
+            eval_log.append({
+                "episode": episode,
+                "mean_reward": mean_score
+            })
 
-    save_model(policy, "models/reinforce/kitchen_reinforce_model.pt", obs_dim, action_dim)
+            print(f"[EVAL] Episode {episode} → Mean Reward: {mean_score:.2f}")
 
-    final_model = load_model("models/reinforce/kitchen_reinforce_model.pt", device)
-    models_to_test = {
-        "final_model": final_model
-    }
+            if mean_score > best_score:
+                best_score = mean_score
+                torch.save(policy.state_dict(), "best_models/reinforce/best_model.pt")
 
-    best_model_path = "best_models/reinforce/best_model.pt"
-    if os.path.exists(best_model_path):
-        models_to_test["best_model"] = load_model(best_model_path, device)
+    #  SAVE FINAL MODEL
+    save_model(policy, "best_models/reinforce/best_model.pt", obs_dim, action_dim)  
+    # SAVE CSV FILES (THIS IS WHAT YOU WERE MISSING)
 
-    all_results = {}
-    for model_name, loaded_model in models_to_test.items():
-        print(f"\n===== Evaluating {model_name} =====")
-        scenario_results = []
+    pd.DataFrame({
+        "episode": list(range(1, len(reward_log) + 1)),
+        "reward": reward_log
+    }).to_csv("logs/reinforce/monitor.csv", index=False)
 
-        for scenario in SCENARIOS:
-            result = evaluate_on_scenario(loaded_model, device, scenario, n_episodes=10)
-            scenario_results.append(result)
+    pd.DataFrame({
+        "episode": list(range(1, len(loss_log) + 1)),
+        "loss": loss_log,
+        "entropy": entropy_log
+    }).to_csv("logs/reinforce/progress.csv", index=False)
 
-            print(
-                f"{scenario}: "
-                f"mean={result['mean_reward']:.2f}, "
-                f"std={result['std_reward']:.2f}, "
-                f"min={result['min_reward']:.2f}, "
-                f"max={result['max_reward']:.2f}"
-            )
+    pd.DataFrame(eval_log).to_csv("logs/reinforce/eval.csv", index=False)
 
-        overall_mean = float(np.mean([r["mean_reward"] for r in scenario_results]))
-        all_results[model_name] = {
-            "overall_mean_reward": overall_mean,
-            "scenario_results": scenario_results,
-        }
-        print(f"Overall mean reward for {model_name}: {overall_mean:.2f}")
-
-    with open("results/reinforce/reinforce_eval_results.json", "w") as f:
-        json.dump(all_results, f, indent=2)
-
-    with open("results/reinforce/reinforce_training_rewards.json", "w") as f:
-        json.dump(
-            {
-                "num_episodes": num_episodes,
-                "gamma": gamma,
-                "entropy_coef": entropy_coef,
-                "training_rewards": training_rewards,
-            },
-            f,
-            indent=2,
-        )
-
-    print("\nSaved evaluation results to results/reinforce/reinforce_eval_results.json")
-    print("Saved training rewards to results/reinforce/reinforce_training_rewards.json")
+    print("Logs saved (monitor.csv, progress.csv, eval.csv)")
 
 
 if __name__ == "__main__":

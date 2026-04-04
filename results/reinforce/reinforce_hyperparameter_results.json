@@ -4,11 +4,11 @@
     "learning_rate": 0.001,
     "gamma": 0.99,
     "entropy_coef": 0.001,
-    "overall_mean_reward": 14.947527725563923,
-    "adult_weight_loss": 19.402000000000026,
-    "adult_weight_gain": 19.097396616541364,
-    "adult_hypertension": 13.430714285714302,
-    "baby_meal": 7.860000000000001
+    "overall_mean_reward": -16.369145363408514,
+    "adult_weight_loss": -5.044000000000003,
+    "adult_weight_gain": -27.05210526315787,
+    "adult_hypertension": -15.097142857142856,
+    "baby_meal": -18.28333333333332
   },
   {
     "name": "reinforce_exp_02",
@@ -37,21 +37,21 @@
     "learning_rate": 0.001,
     "gamma": 0.95,
     "entropy_coef": 0.001,
-    "overall_mean_reward": 5.854382440476189,
-    "adult_weight_loss": 10.763333333333335,
-    "adult_weight_gain": 2.190178571428567,
-    "adult_hypertension": 1.3314285714285683,
-    "baby_meal": 9.132589285714285
+    "overall_mean_reward": 5.917000000000004,
+    "adult_weight_loss": 12.877500000000015,
+    "adult_weight_gain": 9.332999999999998,
+    "adult_hypertension": -4.992499999999998,
+    "baby_meal": 6.45
   },
   {
     "name": "reinforce_exp_05",
     "learning_rate": 0.001,
     "gamma": 0.995,
     "entropy_coef": 0.001,
-    "overall_mean_reward": -8.471357142857144,
-    "adult_weight_loss": -2.732,
-    "adult_weight_gain": -9.122000000000003,
-    "adult_hypertension": -14.631428571428572,
+    "overall_mean_reward": -15.063187030075182,
+    "adult_weight_loss": -10.703500000000002,
+    "adult_weight_gain": -27.05210526315787,
+    "adult_hypertension": -15.097142857142856,
     "baby_meal": -7.4
   },
   {
@@ -59,54 +59,54 @@
     "learning_rate": 0.001,
     "gamma": 0.99,
     "entropy_coef": 0.0,
-    "overall_mean_reward": -3.3582471804511282,
-    "adult_weight_loss": 9.569166666666668,
-    "adult_weight_gain": -11.39263157894737,
-    "adult_hypertension": 1.797142857142856,
-    "baby_meal": -13.406666666666666
+    "overall_mean_reward": 0.6265476190476185,
+    "adult_weight_loss": 10.763333333333335,
+    "adult_weight_gain": 2.62553571428571,
+    "adult_hypertension": -1.5299999999999998,
+    "baby_meal": -9.352678571428573
   },
   {
     "name": "reinforce_exp_07",
     "learning_rate": 0.001,
     "gamma": 0.99,
     "entropy_coef": 0.005,
-    "overall_mean_reward": 11.846278822055153,
-    "adult_weight_loss": 12.312333333333342,
-    "adult_weight_gain": 17.864031954887235,
-    "adult_hypertension": 15.508750000000031,
-    "baby_meal": 1.7000000000000022
+    "overall_mean_reward": 2.237035714285714,
+    "adult_weight_loss": 4.516000000000003,
+    "adult_weight_gain": 8.069999999999997,
+    "adult_hypertension": -3.2978571428571426,
+    "baby_meal": -0.34000000000000064
   },
   {
     "name": "reinforce_exp_08",
     "learning_rate": 0.0005,
     "gamma": 0.95,
     "entropy_coef": 0.005,
-    "overall_mean_reward": -3.6816111372180393,
-    "adult_weight_loss": 1.3470000000000004,
-    "adult_weight_gain": -27.05210526315787,
-    "adult_hypertension": 3.4898214285714273,
-    "baby_meal": 7.488839285714283
+    "overall_mean_reward": 1.6456503759398475,
+    "adult_weight_loss": 4.871999999999999,
+    "adult_weight_gain": -12.07368421052632,
+    "adult_hypertension": -1.3457142857142892,
+    "baby_meal": 15.13
   },
   {
     "name": "reinforce_exp_09",
     "learning_rate": 0.0005,
     "gamma": 0.995,
     "entropy_coef": 0.0005,
-    "overall_mean_reward": -7.543821428571427,
-    "adult_weight_loss": -5.200000000000004,
-    "adult_weight_gain": 1.8739999999999988,
-    "adult_hypertension": -19.4492857142857,
-    "baby_meal": -7.4
+    "overall_mean_reward": -13.563187030075184,
+    "adult_weight_loss": -10.703500000000002,
+    "adult_weight_gain": -27.05210526315787,
+    "adult_hypertension": -15.097142857142856,
+    "baby_meal": -1.4000000000000048
   },
   {
     "name": "reinforce_exp_10",
     "learning_rate": 0.0001,
     "gamma": 0.995,
     "entropy_coef": 0.005,
-    "overall_mean_reward": -13.121562499999992,
-    "adult_weight_loss": -10.987499999999997,
-    "adult_weight_gain": -21.449999999999978,
-    "adult_hypertension": -12.64875,
-    "baby_meal": -7.4
+    "overall_mean_reward": -18.984020363408508,
+    "adult_weight_loss": -10.703500000000002,
+    "adult_weight_gain": -27.05210526315787,
+    "adult_hypertension": -15.097142857142856,
+    "baby_meal": -23.083333333333304
   }
 ]

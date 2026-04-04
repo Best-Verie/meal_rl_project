@@ -13,6 +13,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import EvalCallback
 
 from environment.custom_env import KitchenMealPlanningEnv
+from stable_baselines3.common.logger import configure
 
 
 
@@ -24,9 +25,9 @@ SCENARIOS = [
 ]
 
 
-def make_env():
+def make_env(log_dir):
     env = KitchenMealPlanningEnv(max_steps=20)
-    env = Monitor(env)
+    env = Monitor(env, log_dir)
     return env
 
 
@@ -63,9 +64,14 @@ def main():
     os.makedirs("logs/ppo", exist_ok=True)
     os.makedirs("results/ppo", exist_ok=True)
 
-    train_env = make_env()
-    eval_env = make_env()
 
+    log_dir = "logs/ppo/"
+    
+    train_env = make_env(log_dir)
+    eval_env = make_env(log_dir)
+    
+    logger = configure(log_dir, ["csv", "tensorboard"])
+    
     eval_callback = EvalCallback(
         eval_env,
         best_model_save_path="best_models/ppo",
@@ -94,6 +100,7 @@ def main():
         device="auto",
     )
 
+    model.set_logger(logger)
     model.learn(
         total_timesteps=50000,
         callback=eval_callback,

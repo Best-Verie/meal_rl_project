@@ -4,6 +4,7 @@ import numpy as np
 import os
 import sys
 
+
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
@@ -11,6 +12,7 @@ if PROJECT_ROOT not in sys.path:
 from stable_baselines3 import DQN
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import EvalCallback
+from stable_baselines3.common.logger import configure
 
 from environment.custom_env import KitchenMealPlanningEnv
 
@@ -24,9 +26,9 @@ SCENARIOS = [
 ]
 
 
-def make_env():
+def make_env(log_dir):
     env = KitchenMealPlanningEnv(max_steps=20)
-    env = Monitor(env)
+    env = Monitor(env, log_dir)  
     return env
 
 
@@ -63,8 +65,11 @@ def main():
     os.makedirs("logs/dqn", exist_ok=True)
     os.makedirs("results/dqn", exist_ok=True)
 
-    train_env = make_env()
-    eval_env = make_env()
+    log_dir = "logs/dqn/"
+
+    train_env = make_env(log_dir)
+    eval_env = make_env(log_dir)
+    logger = logger = configure(log_dir, ["csv", "tensorboard"])
 
     eval_callback = EvalCallback(
         eval_env,
@@ -96,6 +101,7 @@ def main():
         device="auto",
     )
 
+    model.set_logger(logger)
     model.learn(
         total_timesteps=50000,
         callback=eval_callback,
