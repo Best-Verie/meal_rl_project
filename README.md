@@ -49,7 +49,7 @@ KitchenMealPlanningRL/
 
 ```bash
 git clone <repo_url>
-cd meal_planning_rl
+cd meal_planning_AI)
 ```
 
 2. Create a Python virtual environment:
