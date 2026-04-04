@@ -3,3 +3,5 @@ stable-baselines3[extra]
 pygame
 imageio
 imageio-ffmpeg
+streamlit
+pandas
